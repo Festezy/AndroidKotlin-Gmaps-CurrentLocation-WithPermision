@@ -93,6 +93,7 @@ class MapsActivity : AppCompatActivity() {
                                     val geocoder = Geocoder(this@MapsActivity)
                                     val geoCoderResult  = geocoder.getFromLocation(currentLocation.latitude,
                                         currentLocation.longitude, 1)
+                                    mMap.clear()
 
                                     var myLocation = LatLng(currentLatitude, currentLongitude)
                                     mMap.addMarker(MarkerOptions().position(myLocation)
