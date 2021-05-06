@@ -52,13 +52,6 @@ class MapsActivity : AppCompatActivity() {
                 ) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION
                 ) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return
         }
         fusedLocationProviderClient.requestLocationUpdates(
@@ -80,7 +73,7 @@ class MapsActivity : AppCompatActivity() {
                             }
 
                             mMap.isMyLocationEnabled = true
-                            mMap.uiSettings.isZoomControlsEnabled
+                            mMap.uiSettings.isZoomControlsEnabled = true
                             val locationResult = LocationServices
                                 .getFusedLocationProviderClient(this@MapsActivity).lastLocation
 
@@ -95,9 +88,11 @@ class MapsActivity : AppCompatActivity() {
                                         currentLocation.longitude, 1)
                                     mMap.clear()
 
+                                    var title = geoCoderResult[0].getAddressLine(0)
                                     var myLocation = LatLng(currentLatitude, currentLongitude)
                                     mMap.addMarker(MarkerOptions().position(myLocation)
-                                        .title(geoCoderResult[0].getAddressLine(0))).showInfoWindow()
+                                        .title(title)).showInfoWindow()
+
                                     mMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation))
                                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15f))
                                 }
